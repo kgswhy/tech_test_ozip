@@ -21,9 +21,13 @@ function addTask() {
 function renderTasks() {
   taskList.innerHTML = "";
 
-  const filteredTasks = showUnfinishedOnly
-    ? tasks.filter((task) => !task.completed)
-    : tasks;
+  const filterValue = document.getElementById("filterSelect").value;
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filterValue === "unfinished") return !task.completed;
+    if (filterValue === "finished") return task.completed;
+    return true;
+  });
 
   filteredTasks.forEach((task, index) => {
     const li = document.createElement("li");
@@ -48,15 +52,6 @@ function renderTasks() {
 
 function toggleTask(index) {
   tasks[index].completed = !tasks[index].completed;
-  renderTasks();
-}
-
-function toggleFilter() {
-  showUnfinishedOnly = !showUnfinishedOnly;
-  const filterButton = document.getElementById("filterButton");
-  filterButton.textContent = showUnfinishedOnly
-    ? "Show All Tasks"
-    : "Show Unfinished Only";
   renderTasks();
 }
 

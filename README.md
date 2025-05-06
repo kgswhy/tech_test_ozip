@@ -21,8 +21,13 @@ Tugas:
 Rapikan struktur kode (JS, HTML, CSS)
 Hapus duplikasi & benahi penamaan variabel/fungsi agar konsisten
 
- Naufal Haidar Rauf – Testing & Bug Rechecking
+### Naufal Haidar Rauf – Testing & Bug Rechecking
+
 Tugas:
-Uji aplikasi setelah perbaikan & fitur baru
-Catat bug tambahan dan sampaikan ke lead
-Pastikan semua fungsi berjalan sesuai ekspektasi
+
+1. Uji aplikasi setelah perbaikan & fitur baru
+    - fitur menambahkan task baru:✅
+    - fitur menghapus otomatis task yang dimasukkan user: ✅
+    
+2. Catat bug tambahan dan sampaikan ke lead
+3. Pastikan semua fungsi berjalan sesuai ekspektasi

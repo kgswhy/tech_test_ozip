@@ -1,7 +1,8 @@
 const taskInput = document.getElementById("taskInput");
 const taskList = document.getElementById("taskList");
-let tasks = [];
+let taskArray = [];
 let showUnfinishedOnly = false;
+
 
 function addTask() {
   const taskText = taskInput.value.trim();
@@ -9,23 +10,22 @@ function addTask() {
 
   const task = {
     text: taskText,
-    completed: false,
+    isCompleted: false,
     createdAt: new Date(),
   };
 
-  tasks.push(task);
+  taskArray.push(task);
   taskInput.value = "";
   renderTasks();
 }
 
+
 function renderTasks() {
   taskList.innerHTML = "";
-
   const filterValue = document.getElementById("filterSelect").value;
-
-  const filteredTasks = tasks.filter((task) => {
-    if (filterValue === "unfinished") return !task.completed;
-    if (filterValue === "finished") return task.completed;
+  const filteredTasks = taskArray.filter((task) => {
+    if (filterValue === "unfinished") return !task.isCompleted;
+    if (filterValue === "finished") return task.isCompleted;
     return true;
   });
 
@@ -34,7 +34,7 @@ function renderTasks() {
 
     const taskSpan = document.createElement("span");
     taskSpan.textContent = task.text;
-    if (task.completed) {
+    if (task.isCompleted) {
       taskSpan.style.textDecoration = "line-through";
     }
 
@@ -51,11 +51,11 @@ function renderTasks() {
 }
 
 function toggleTask(index) {
-  tasks[index].completed = !tasks[index].completed;
+  taskArray[index].isCompleted = !taskArray[index].isCompleted;
   renderTasks();
 }
 
 function deleteTask(index) {
-  tasks.splice(index, 1);
+  taskArray.splice(index, 1);
   renderTasks();
 }

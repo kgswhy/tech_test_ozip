@@ -8,8 +8,23 @@ Responsivitas tombol di mobile
 Febrian Dani Ritonga – Bug Fixing (Functional Bugs)
 Tugas:
 Perbaiki bug seperti:
-Tidak bisa menandai task sebagai selesai
-Task tidak terhapus meski diklik delete
+- memperbaiki = menjadi === dan menambahkan === true
+- Assignment di Kondisi If 
+```if (task.completed = true)```
+ 
+menjadi :
+``` if (task.completed)```
+
+- Input Tidak Dikosongkan Setelah Menambah Tugas
+taskInput.value = "";
+
+- Menambahkan Fungsi Hapus Task
+```
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  renderTasks();
+}
+```
 
 Galih Zen Salim – Filter Task Feature (Logic & UI)
 Tugas:

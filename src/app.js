@@ -4,7 +4,7 @@ let tasks = [];
 
 function addTask() {
   const taskText = taskInput.value.trim();
-  if (taskText === "") return;
+  if (taskText === "true") return;
 
   const task = {
     text: taskText,

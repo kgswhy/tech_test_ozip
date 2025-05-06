@@ -60,7 +60,13 @@ function deleteTask(index) {
   renderTasks();
 }
 
-taskInput.addEventListener("keypress", function(e) {
+taskInput.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    addTask();
+  }
+});
+
+taskInput.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     addTask();
   }

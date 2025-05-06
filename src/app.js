@@ -4,7 +4,7 @@ let tasks = [];
 let showUnfinishedOnly = false;
 
 function addTask() {
-  const taskText = taskInput.value;
+  const taskText = taskInput.value.trim();
   if (taskText === "") return;
 
   const task = {
@@ -27,16 +27,20 @@ function renderTasks() {
 
   filteredTasks.forEach((task, index) => {
     const li = document.createElement("li");
-    li.textContent = task.text;
 
+    const taskSpan = document.createElement("span");
+    taskSpan.textContent = task.text;
     if (task.completed) {
-      li.style.textDecoration = "line-through";
+      taskSpan.style.textDecoration = "line-through";
     }
 
-    li.addEventListener("click", () => {
-      const realIndex = tasks.indexOf(task);
-      toggleTask(realIndex);
-    });
+    taskSpan.addEventListener("click", () => toggleTask(index));
+    li.appendChild(taskSpan);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.onclick = () => deleteTask(index);
+    li.appendChild(deleteBtn);
 
     taskList.appendChild(li);
   });
@@ -53,5 +57,10 @@ function toggleFilter() {
   filterButton.textContent = showUnfinishedOnly
     ? "Show All Tasks"
     : "Show Unfinished Only";
+  renderTasks();
+}
+
+function deleteTask(index) {
+  tasks.splice(index, 1);
   renderTasks();
 }

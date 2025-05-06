@@ -47,6 +47,6 @@ Pastikan semua fungsi berjalan sesuai ekspektasi
 1. Uji aplikasi setelah perbaikan & fitur baru
     - fitur menambahkan task baru:✅
     - fitur menghapus otomatis task yang dimasukkan user: ✅
-    - fitur menampilkan task berdasarkan opsi dropdown/filter yang dipilih
+    - fitur menampilkan task berdasarkan opsi dropdown/filter yang dipilih: ✅
 2. Catat bug tambahan dan sampaikan ke lead
 3. Pastikan semua fungsi berjalan sesuai ekspektasi

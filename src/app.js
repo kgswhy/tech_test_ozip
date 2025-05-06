@@ -1,6 +1,7 @@
 const taskInput = document.getElementById("taskInput");
 const taskList = document.getElementById("taskList");
 let tasks = [];
+let showUnfinishedOnly = false;
 
 function addTask() {
   const taskText = taskInput.value.trim();
@@ -9,7 +10,7 @@ function addTask() {
   const task = {
     text: taskText,
     completed: false,
-    createdAt: new Date()
+    createdAt: new Date(),
   };
 
   tasks.push(task);
@@ -19,9 +20,17 @@ function addTask() {
 
 function renderTasks() {
   taskList.innerHTML = "";
-  tasks.forEach((task, index) => {
-    const li = document.createElement("li");
 
+  const filterValue = document.getElementById("filterSelect").value;
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filterValue === "unfinished") return !task.completed;
+    if (filterValue === "finished") return task.completed;
+    return true;
+  });
+
+  filteredTasks.forEach((task, index) => {
+    const li = document.createElement("li");
 
     const taskSpan = document.createElement("span");
     taskSpan.textContent = task.text;
@@ -31,7 +40,6 @@ function renderTasks() {
 
     taskSpan.addEventListener("click", () => toggleTask(index));
     li.appendChild(taskSpan);
-
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";

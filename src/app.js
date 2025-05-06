@@ -1,73 +1,87 @@
-const taskInput = document.getElementById("taskInput");
-const taskList = document.getElementById("taskList");
-let tasks = [];
-let showUnfinishedOnly = false;
+document.addEventListener('DOMContentLoaded', () => {
+  const taskInput = document.getElementById('taskInput');
+  const taskList = document.getElementById('taskList');
+  const addButton = document.getElementById('addButton');
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-function addTask() {
-  const taskText = taskInput.value.trim();
-  if (taskText === "") return;
-
-  const task = {
-    text: taskText,
-    completed: false,
-    createdAt: new Date(),
-  };
-
-  tasks.push(task);
-  taskInput.value = "";
+  // Initialize the app
   renderTasks();
-}
 
-function renderTasks() {
-  taskList.innerHTML = "";
-
-  const filterValue = document.getElementById("filterSelect").value;
-
-  const filteredTasks = tasks.filter((task) => {
-    if (filterValue === "unfinished") return !task.completed;
-    if (filterValue === "finished") return task.completed;
-    return true;
+  // Add task event listeners
+  addButton.addEventListener('click', addTask);
+  taskInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') addTask();
   });
 
-  filteredTasks.forEach((task, index) => {
-    const li = document.createElement("li");
+  function addTask() {
+    const taskText = taskInput.value.trim();
+    if (!taskText) return;
 
-    const taskSpan = document.createElement("span");
-    taskSpan.textContent = task.text;
-    if (task.completed) {
-      taskSpan.style.textDecoration = "line-through";
+    const task = {
+      id: Date.now(),
+      text: taskText,
+      completed: false,
+      createdAt: new Date()
+    };
+
+    tasks.push(task);
+    saveTasks();
+    renderTasks();
+    taskInput.value = '';
+    taskInput.focus();
+  }
+
+  function renderTasks() {
+    taskList.innerHTML = '';
+    
+    if (tasks.length === 0) {
+      taskList.innerHTML = '<p class="empty-message">No tasks yet. Add one above!</p>';
+      return;
     }
 
-    taskSpan.addEventListener("click", () => toggleTask(index));
-    li.appendChild(taskSpan);
+    tasks.forEach(task => {
+      const li = document.createElement('li');
+      if (task.completed) {
+        li.classList.add('completed');
+      }
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.onclick = () => deleteTask(index);
-    li.appendChild(deleteBtn);
+      li.innerHTML = `
+        <span>${task.text}</span>
+        <div class="task-actions">
+          <button class="delete-btn" data-id="${task.id}">×</button>
+        </div>
+      `;
 
-    taskList.appendChild(li);
-  });
-}
+      li.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('delete-btn')) {
+          toggleTask(task.id);
+        }
+      });
 
-function toggleTask(index) {
-  tasks[index].completed = !tasks[index].completed;
-  renderTasks();
-}
+      li.querySelector('.delete-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteTask(task.id);
+      });
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  renderTasks();
-}
-
-taskInput.addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    addTask();
+      taskList.appendChild(li);
+    });
   }
-});
 
-taskInput.addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    addTask();
+  function toggleTask(id) {
+    tasks = tasks.map(task => 
+      task.id === id ? {...task, completed: !task.completed} : task
+    );
+    saveTasks();
+    renderTasks();
+  }
+
+  function deleteTask(id) {
+    tasks = tasks.filter(task => task.id !== id);
+    saveTasks();
+    renderTasks();
+  }
+
+  function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 });

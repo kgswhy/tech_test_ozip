@@ -34,3 +34,9 @@ function toggleTask(index) {
   tasks[index].completed = !tasks[index].completed;
   renderTasks();
 }
+
+taskInput.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    addTask();
+  }
+});
